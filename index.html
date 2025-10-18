@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Mobile Legends Diamond Store - Top Up Now! 🔥</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Padauk', sans-serif;
+            background-color: #f0f2f5;
+            padding-bottom: 80px;
+        }
+        /* Marquee Styling */
+        .marquee-custom {
+            background-color: #add8e6; /* Light Blue Background */
+            color: #dc3545; /* Red Text */
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 8px 0;
+            border-bottom: 2px solid #007bff;
+        }
+
+        /* Red/Danger Theme */
+        .header-bg {
+            background-color: #dc3545; /* Main Red */
+            color: white;
+            padding: 2.5rem 0;
+            margin-bottom: 0rem; 
+            text-shadow: 1px 1px 2px #00000080;
+            border-bottom: 0px solid transparent; /* Border ကို ဖယ်လိုက်သည် */
+        }
+        /* Container margin to start below marquee */
+        .container {
+            margin-top: 2rem;
+        }
+        .card-custom {
+            border: 3px solid #dc3545; /* Red Border */
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(220, 53, 69, 0.2);
+        }
+        .card-header-custom {
+            background-color: #dc3545;
+            color: white;
+            border-radius: 0.75rem 0.75rem 0 0 !important;
+            padding: 1.5rem;
+            font-weight: 700;
+        }
+        /* Price Table Styles */
+        .price-table {
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .price-table th {
+            background-color: #dc3545; /* Red Header */
+            color: white;
+            font-weight: 700;
+            text-align: center;
+        }
+        .price-table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .price-table tbody tr:nth-child(even) {
+            background-color: #f8d7da; /* Light Red/Pink */
+        }
+        .price-table .highlight {
+            background-color: #ffc107 !important; /* Yellow highlight for special items */
+            font-weight: 700;
+        }
+        .price-table .diamond-amount {
+            font-weight: 700;
+            color: #007bff;
+        }
+        .price-table .price-mmk {
+            font-weight: 700;
+            color: #1e7e34; /* Dark Green for Price */
+        }
+        
+        /* 2X Recharge Table */
+        .two-times-table thead th {
+             background-color: #1e7e34; /* Green Header */
+        }
+
+        /* Order Button inside table */
+        .btn-order-table {
+            background-color: #dc3545;
+            border: none;
+            color: white;
+            padding: 5px 15px;
+            font-weight: 700;
+            transition: background-color 0.3s;
+        }
+        .btn-order-table:hover {
+            background-color: #bd2130;
+            color: white;
+        }
+
+        /* Trust Badge Styles */
+        .trust-badge-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .trust-badge {
+            background-color: #ffc107;
+            color: #343a40;
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            font-weight: 700;
+            font-size: 1rem;
+            animation: pulse 2s infinite;
+            display: flex;
+            align-items: center;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 193, 7, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
+        }
+
+        /* Payment Info Box Styling */
+        .payment-info-box {
+            background-color: #fff3f3; /* Very light red */
+            border: 2px dashed #dc3545; /* Red dashed border */
+            border-radius: 0.5rem;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        .payment-info-box h6 {
+            font-weight: 700;
+            color: #dc3545; /* Red title */
+        }
+        .payment-info-box strong {
+            font-size: 1.2rem;
+            color: #007bff; /* Blue for phone number */
+        }
+        
+        /* Custom Button */
+        .btn-submit-custom {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .btn-submit-custom:hover {
+            background-color: #bd2130;
+            border-color: #bd2130;
+            color: white;
+        }
+        .loading-spinner {
+            display: none;
+        }
+
+        /* Success Page Styling */
+        .success-page {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .success-card {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+            box-shadow: 0 0 25px rgba(21, 87, 36, 0.3);
+        }
+        .success-card h1 i {
+            font-size: 3rem;
+            margin-right: 15px;
+        }
+        
+        /* Payment Radio Custom Style */
+        .payment-radio-custom {
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .payment-radio-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        .payment-radio-custom input:checked + label {
+            border: 3px solid #dc3545;
+            background-color: #fcebeb;
+        }
+        .payment-radio-custom label {
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            display: block;
+            padding: 15px;
+            text-align: center;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-bg">
+        <div class="container text-center">
+            <h1>Mobile Legends Diamond Top-Up 🔥</h1>
+            <p class="lead">ယုံကြည်စိတ်ချစွာ အမြန်ဆုံး မှာယူလိုက်ပါ။</p>
+        </div>
+    </header>
+    
+    <marquee class="marquee-custom" behavior="scroll" direction="left" scrollamount="6">
+        <i class="fas fa-bullhorn"></i> YK Game Shop မှာ 24နာရီ ယုံကြည့်စိတ်ချစွာ စိတ်ကြိုက်ဝယ်ယူနိုင်ပါတယ်နော် <i class="fas fa-bullhorn"></i>
+    </marquee>
+
+
+    <div class="container">
+        <div class="trust-badge-container">
+            <div class="trust-badge">
+                <i class="fas fa-shield-alt"></i>
+                ယုံကြည်စိတ်ချရသော ဝန်ဆောင်မှု
+            </div>
+        </div>
+
+        <div id="mainContent">
+
+            <div id="orderTab">
+                <div class="row mb-4 justify-content-center">
+                    <div class="col-lg-10">
+                        <h2 class="text-center text-danger mb-4">Today Diamond Price (ဈေးနှုန်းဇယား)</h2>
+                        
+                        <h4 class="text-center text-danger mb-3"><i class="fas fa-gem"></i> Standard Diamond Prices (Bonus မပါ)</h4>
+                        <div class="table-responsive price-table mb-4">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Diamond ပမာဏ</th>
+                                        <th>ဈေးနှုန်း (ကျပ်)</th>
+                                        <th>မှာယူရန်</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="highlight">
+                                        <td class="diamond-amount">Twilight Pass</td>
+                                        <td class="price-mmk">32,000 Ks</td>
+                                        <td><button class="btn btn-order-table" onclick="scrollToOrder('Twilight Pass - 32000')">ဝယ်ယူမယ်</button></td>
+                                    </tr>
+                                    <tr class="highlight">
+                                        <td class="diamond-amount">Weekly Pass</td>
+                                        <td class="price-mmk">6,150 Ks</td>
+                                        <td><button class="btn btn-order-table" onclick="scrollToOrder('Weekly Pass - 6150')">ဝယ်ယူမယ်</button></td>
+                                    </tr>
+                                    </tbody>
+                            </table>
+                        </div>
+
+                        <h4 class="text-center text-success mb-3"><i class="fas fa-star"></i> Normal Server (2X Recharge) ဈေးနှုန်း</h4>
+                        <p class="text-center text-muted mb-4">Recharge မလုပ်ဖူးသေးသည့် Account များအတွက်သာဖြစ်သည်။ ထပ်ထည့်လျှင် နှစ်ဆမရပါ။</p>
+                         <div class="table-responsive price-table two-times-table mb-5">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Diamond ပမာဏ (Base + Bonus)</th>
+                                        <th>ဈေးနှုန်း (ကျပ်)</th>
+                                        <th>မှာယူရန်</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="diamond-amount">50 + 50 (နှစ်ဆ)</td>
+                                        <td class="price-mmk">3,250 Ks</td>
+                                        <td><button class="btn btn-order-table" onclick="scrollToOrder('50+50=3250')">ဝယ်ယူမယ်</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="diamond-amount">150 + 150 (နှစ်ဆ)</td>
+                                        <td class="price-mmk">9,700 Ks</td>
+                                        <td><button class="btn btn-order-table" onclick="scrollToOrder('150+150=9700')">ဝယ်ယူမယ်</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="diamond-amount">250 + 250 (နှစ်ဆ)</td>
+                                        <td class="price-mmk">15,500 Ks</td>
+                                        <td><button class="btn btn-order-table" onclick="scrollToOrder('250+250=15500')">ဝယ်ယူမယ်</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="diamond-amount">500 + 500 (နှစ်ဆ)</td>
+                                        <td class="price-mmk">31,000 Ks</td>
+                                        <td><button class="btn btn-order-table" onclick="scrollToOrder('500+500=31000')">ဝယ်ယူမယ်</button></td>
+                                    </tr>
+                                    <tr class="highlight">
+                                        <td class="diamond-amount">All နှစ်ဆ (500 + 500) အပါအဝင်</td>
+                                        <td class="price-mmk">59,450 Ks</td>
+                                        <td><button class="btn btn-order-table" onclick="scrollToOrder('All2X=59450')">ဝယ်ယူမယ်</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row justify-content-center mb-5" id="orderFormSection">
+                    <div class="col-lg-10">
+                        <div class="card card-custom">
+                            <div class="card-header-custom">
+                                <h3 class="mb-0 text-center"><i class="fas fa-hand-point-down"></i> မှာယူမှု အချက်အလက် ဖြည့်စွက်ရန်</h3>
+                            </div>
+                            <div class="card-body p-4">
+                                <form id="orderForm">
+                                    
+                                    <h5 class="text-danger mb-3"><i class="fas fa-gem"></i> ရွေးချယ်ထားသော Diamond</h5>
+                                    <div class="mb-4 p-3 border rounded" id="selectedDiamondInfo">
+                                        <p class="mb-0 text-dark">**Diamond ပမာဏ:** <strong id="selectedDiamond" class="text-primary">---</strong></p>
+                                        <p class="mb-0 text-dark">**ဈေးနှုန်း:** <strong id="selectedPrice" class="text-success">---</strong></p>
+                                    </div>
+
+                                    <h5 class="text-danger mb-3"><i class="fas fa-gamepad"></i> MLBB ID အချက်အလက်</h5>
+                                    <div class="row mb-4">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="gameId" class="form-label">Game ID</label>
+                                            <input type="text" class="form-control form-control-lg" id="gameId" placeholder="ဥပမာ: 12345678" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="serverId" class="form-label">Server ID (ကွင်းပိတ်မပါ)</label>
+                                            <input type="text" class="form-control form-control-lg" id="serverId" placeholder="ဥပမာ: 1234" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <h5 class="text-danger mt-4 mb-3"><i class="fas fa-wallet"></i> ငွေပေးချေမှု ရွေးချယ်ရန်</h5>
+                                    
+                                    <div class="row mb-4">
+                                        <div class="col-md-6 mb-3 payment-radio-custom">
+                                            <input class="form-check-input d-none" type="radio" name="paymentType" id="kpayRadio" value="KBZPay (Kpay)" required>
+                                            <label class="form-check-label h5 text-success" for="kpayRadio">KBZPay (Kpay)</label>
+                                        </div>
+                                        <div class="col-md-6 mb-3 payment-radio-custom">
+                                            <input class="form-check-input d-none" type="radio" name="paymentType" id="waveRadio" value="WavePay (Wave)" required>
+                                            <label class="form-check-label h5 text-primary" for="waveRadio">WavePay (Wave)</label>
+                                        </div>
+                                    </div>
+
+                                    <div id="paymentDetails" class="payment-info-box" style="display:none;"></div>
+                                    
+                                    <div class="mb-4 mt-4">
+                                        <label for="lastSevenDigits" class="form-label">ငွေလွှဲသူ ဖုန်းနံပါတ် နောက်ဆုံး ၇ လုံး</label>
+                                        <input type="text" class="form-control" id="lastSevenDigits" placeholder="ဥပမာ: 1234567" pattern="\d{7}" maxlength="7" required>
+                                        <div class="form-text text-muted">ငွေလွှဲမှန်ကန်ကြောင်း စစ်ဆေးရန်အတွက် မဖြစ်မနေ ဖြည့်ပေးပါ။ (နောက်ဆုံး ၇ လုံးသာ)</div>
+                                    </div>
+                                    
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-submit-custom btn-lg">
+                                            <span id="submitText"><i class="fas fa-paper-plane"></i> ဝယ်ယူမယ်</span>
+                                            <span class="loading-spinner" id="loadingSpinner">
+                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                ပို့နေပါပြီ... ခဏစောင့်ပါ...
+                                            </span>
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-10">
+                        <div id="statusMessage" class="alert text-center" style="display:none;"></div>
+                    </div>
+                </div>
+            </div> <div id="successTab" class="success-page" style="display:none;">
+                <div class="col-lg-8">
+                    <div class="card success-card text-center p-5">
+                         <h1 class="text-success mb-3"><i class="fas fa-check-circle"></i> အော်ဒါတင်ခြင်း အောင်မြင်ပါသည်!</h1>
+                         <p class="lead">မှာယူမှု အချက်အလက်များကို Admin ထံသို့ အောင်မြင်စွာ ပေးပို့ပြီးပါပြီ။</p>
+                         <h4 class="text-dark mt-4">**ခဏလေး စောင့်ဆိုင်းပေးပါ Diamond ချက်ချင်းဖြည့်ပေးပါမည်။**</h4>
+                         <p class="text-muted mt-3">၅ စက္ကန့်အတွင်း ပင်မစာမျက်နှာသို့ ပြန်လည်ရောက်ရှိပါမည်...</p>
+                    </div>
+                </div>
+            </div>
+
+        </div> </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // သင့်ရဲ့ Telegram Bot အချက်အလက်များ - သေချာစစ်ပါ
+        const BOT_TOKEN = '8243533611:AAEG7xQ4gssv0gppbJ-ZLtoZOn5f0Q4TjkQ';
+        const CHAT_ID = '8312437860';
+        const TELEGRAM_API = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+        // Admin ငွေလွှဲအချက်အလက်
+        const ADMIN_PHONE = '09769191666'; 
+        const ADMIN_INFO = {
+            'KBZPay (Kpay)': { phone: ADMIN_PHONE, name: 'HtooMyo' },
+            'WavePay (Wave)': { phone: ADMIN_PHONE, name: 'HtooMyo' }
+        };
+
+        const paymentRadios = document.querySelectorAll('input[name="paymentType"]');
+        const paymentDetailsDiv = document.getElementById('paymentDetails');
+        const orderTab = document.getElementById('orderTab');
+        const successTab = document.getElementById('successTab');
+        
+        let selectedDiamondValue = null; // Store the selected diamond value
+
+        // Helper function to format price
+        function formatPrice(price) {
+            return new Intl.NumberFormat('en-US').format(price) + ' Ks';
+        }
+
+        // Diamond Price Data
+        const standardPrices = [
+            { d: 11, p: 950 }, { d: 22, p: 1900 }, { d: 56, p: 4200 }, { d: 86, p: 4900 },
+            { d: 112, p: 8400 }, { d: 172, p: 9800 }, { d: 257, p: 14700 }, { d: 343, p: 19600 },
+            { d: 429, p: 24500 }, { d: 514, p: 29400 }, { d: 600, p: 34300 }, { d: 706, p: 38700 },
+            { d: 878, p: 48400 }, { d: 963, p: 53400 }, { d: 1049, p: 58300 }, { d: 1135, p: 63200 },
+            { d: 1412, p: 77400 }, { d: 2195, p: 125000 }, { d: 3688, p: 196000 }, { d: 5532, p: 296000 },
+            { d: 9288, p: 491000 }, { d: 12976, p: 687000 }, { d: 14820, p: 787000 }, { d: 18508, p: 982000 }
+        ];
+
+        // Generate Standard Diamond Rows
+        const tableBody = document.querySelector('.price-table tbody');
+        standardPrices.forEach(item => {
+            const row = document.createElement('tr');
+            const diamondAmount = `${item.d}`;
+            const priceText = formatPrice(item.p);
+            const value = `${item.d}=${item.p}`;
+
+            row.innerHTML = `
+                <td class="diamond-amount">${diamondAmount}</td>
+                <td class="price-mmk">${priceText}</td>
+                <td><button class="btn btn-order-table" onclick="scrollToOrder('${value}')">ဝယ်ယူမယ်</button></td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        // Function to scroll to order form and select diamond
+        window.scrollToOrder = function(diamondValue) {
+            selectedDiamondValue = diamondValue;
+
+            // Update displayed diamond info
+            const parts = diamondValue.split('=');
+            let diamondInfo = parts[0].split('-').map(s => s.trim());
+            let diamond = diamondInfo[0];
+            let price = diamondInfo.length > 1 ? diamondInfo[1] : parts.length > 1 ? parts[1] : 'N/A';
+            
+            // Format for display
+            const displayDiamond = diamond.includes('Pass') || diamond.includes('2X') ? diamond : `${diamond} Diamonds`;
+            const displayPrice = price !== 'N/A' ? parseInt(price.replace(/,/g, '')).toLocaleString() + ' Ks' : 'N/A';
+
+
+            document.getElementById('selectedDiamond').textContent = displayDiamond;
+            document.getElementById('selectedPrice').textContent = displayPrice;
+
+            // Scroll to the order form section
+            document.getElementById('orderFormSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Clear payment selection and details on new selection
+            document.getElementById('kpayRadio').checked = false;
+            document.getElementById('waveRadio').checked = false;
+            paymentDetailsDiv.style.display = 'none';
+        };
+
+        // Payment Radio Button ကို ရွေးလိုက်ရင် အချက်အလက်ပြောင်းလဲရန်
+        paymentRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                const selectedPayment = this.value;
+                const info = ADMIN_INFO[selectedPayment];
+                
+                paymentDetailsDiv.style.display = 'block';
+                paymentDetailsDiv.innerHTML = `
+                    <h6>ငွေလွှဲရမည့် Admin ဖုန်းနံပါတ်</h6>
+                    <p class="mb-1">**${selectedPayment}** ဖုန်းနံပါတ်:</p>
+                    <strong class="text-danger">${info.phone}</strong>
+                    <p class="mt-2 mb-0 text-muted">အကောင့်နာမည်: ${info.name}</p>
+                `;
+            });
+        });
+
+
+        document.getElementById('orderForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            if (!selectedDiamondValue) {
+                alert("ကျေးဇူးပြု၍ ဈေးနှုန်းဇယားမှ Diamond ပမာဏကို ရွေးချယ်ပေးပါ။");
+                document.getElementById('orderTab').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+
+            // Loading state
+            document.getElementById('submitText').style.display = 'none';
+            document.getElementById('loadingSpinner').style.display = 'inline-block';
+            document.getElementById('statusMessage').style.display = 'none';
+
+            // Form Data
+            const gameId = document.getElementById('gameId').value.trim();
+            const serverId = document.getElementById('serverId').value.trim();
+            const diamondAmountFull = selectedDiamondValue;
+            const lastSevenDigits = document.getElementById('lastSevenDigits').value.trim();
+            const selectedPayment = document.querySelector('input[name="paymentType"]:checked').value;
+            
+            // Diamond ပမာဏနဲ့ ဈေးနှုန်းကို ခွဲထုတ်ခြင်း
+            const parts = diamondAmountFull.split('=');
+            let diamondInfo = parts[0].split('-').map(s => s.trim());
+            let diamond = diamondInfo[0];
+            let price = diamondInfo.length > 1 ? diamondInfo[1] : parts.length > 1 ? parts[1] : 'N/A';
+            
+            // Format Price
+            const formattedPrice = price !== 'N/A' ? parseInt(price.replace(/,/g, '')).toLocaleString() + ' Ks' : 'N/A';
+            
+            const adminPhone = ADMIN_INFO[selectedPayment].phone;
+
+            // Telegram Message
+            const message = `
+🔥 **အော်ဒါအသစ် Diamond Order! (WEB)** 🔥
+
+*-----------------------------------*
+**👤 မှာယူသူအချက်အလက်**
+*-----------------------------------*
+**🆔 Game ID:** \`${gameId}\`
+**🌐 Server ID:** \`${serverId}\`
+**💎 ဝယ်ယူပမာဏ:** ${diamond}
+**💰 ဈေးနှုန်း:** ${formattedPrice}
+
+*-----------------------------------*
+**💸 ငွေပေးချေမှုအချက်အလက် (Payment)**
+*-----------------------------------*
+**💳 ပေးချေသည့်နည်းလမ်း:** **${selectedPayment}**
+**📲 ငွေလွှဲသူ ဖုန်းနံပါတ် နောက်ဆုံး ၇ လုံး:** **${lastSevenDigits}**
+**👉 Admin Phone:** ${adminPhone}
+*-----------------------------------*
+`;
+
+            // Telegram API ကို အသုံးပြုပြီး message ပို့ခြင်း
+            const url = `${TELEGRAM_API}?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('loadingSpinner').style.display = 'none';
+                    document.getElementById('submitText').style.display = 'inline';
+
+                    if (data.ok) {
+                        // Success: Show Success Tab (Active 2)
+                        orderTab.style.display = 'none';
+                        successTab.style.display = 'flex';
+
+                        // Clear the form and state
+                        document.getElementById('orderForm').reset();
+                        paymentDetailsDiv.style.display = 'none';
+                        selectedDiamondValue = null;
+                        document.getElementById('selectedDiamond').textContent = '---';
+                        document.getElementById('selectedPrice').textContent = '---';
+
+                        // Return to Order Tab (Active 1) after 5 seconds
+                        setTimeout(() => {
+                            successTab.style.display = 'none';
+                            orderTab.style.display = 'block';
+                            window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
+                        }, 5000);
+
+                    } else {
+                        // Error Message: Show in the same tab (Active 1)
+                        const statusDiv = document.getElementById('statusMessage');
+                        statusDiv.style.display = 'block';
+                        statusDiv.className = 'alert alert-danger';
+                        statusDiv.innerHTML = `
+                            <h4>❌ အော်ဒါတင်ရာတွင် အမှားအယွင်းရှိပါသည်။</h4>
+                            <p>ကျေးဇူးပြု၍ ဖုန်းနံပါတ် **${ADMIN_PHONE}** သို့ တိုက်ရိုက်ဆက်သွယ်မှာယူပေးပါ။</p>
+                            <p class="mb-0">Error: ${data.description || 'Unknown error'}</p>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    // Network Error Message: Show in the same tab (Active 1)
+                    document.getElementById('loadingSpinner').style.display = 'none';
+                    document.getElementById('submitText').style.display = 'inline';
+                    
+                    const statusDiv = document.getElementById('statusMessage');
+                    statusDiv.style.display = 'block';
+                    statusDiv.className = 'alert alert-danger';
+                    statusDiv.innerHTML = `
+                        <h4>❌ Network ချိတ်ဆက်မှု အမှားအယွင်းရှိပါသည်။</h4>
+                        <p>ကျေးဇူးပြု၍ ဖုန်းနံပါတ် **${ADMIN_PHONE}** သို့ တိုက်ရိုက်ဆက်သွယ်မှာယူပေးပါ။</p>
+                    `;
+                    console.error('Fetch error:', error);
+                });
+        });
+    </script>
+
+</body>
+</html>
